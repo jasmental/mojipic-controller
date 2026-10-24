@@ -1,6 +1,19 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Mojipic Remote v7</title><style>:root{font-family:-apple-system,BlinkMacSystemFont,system-ui;color:#f5f8ff;background:#0c1424}body{max-width:620px;margin:0 auto;padding:22px 18px 70px}h1{font-size:29px;margin:12px 0 3px}.sub{color:#94a5bf;margin:0 0 20px}.panel{padding:18px;background:#192538;border-radius:18px;margin:15px 0}button{background:#5650e9;color:white;border:0;border-radius:13px;padding:14px;font-size:16px;font-weight:650;cursor:pointer}button:disabled{opacity:.45}button.secondary{background:#30445d}button.warn{background:#884344}button.wide{width:100%;margin:8px 0}input[type=file]{display:block;margin:12px 0;width:100%}input[type=range]{width:100%}.row{display:flex;gap:9px}.row button{flex:1}canvas{width:256px;height:256px;image-rendering:pixelated;background:#000;display:block;margin:15px auto;border-radius:9px}#status{color:#c3d4f0;line-height:1.5;white-space:pre-wrap}progress{width:100%;height:20px}.muted{font-size:13px;color:#98a7bd}input[type=number]{width:70px;background:#111d31;border:1px solid #52607b;border-radius:9px;color:white;padding:10px;font-size:16px}#library button{margin:4px}label{display:block;margin-top:12px}</style></head><body><h1>🚘 Mojipic Remote <small style="font-size:13px;color:#8c9db5">v7</small></h1><p class="sub">Your photos → your 32×32 LED display</p><section class="panel"><button id="connect" class="wide">Connect Mojipic</button><div id="status">Not connected.</div></section><section class="panel"><h2>Send a picture</h2><input type="file" id="photo" accept="image/*"><canvas id="preview" width="32" height="32"></canvas><div class="row"><button id="upload" disabled>Upload & display</button><button class="secondary" id="test">Create test image</button></div><progress id="progress" value="0" max="192"></progress><p class="muted">One picture = 192 Bluetooth packets. Keep Safari open and the phone near the display until verification completes.</p></section><section class="panel"><h2>Saved images</h2><div id="library"></div><p class="muted">Image buttons are saved locally in this browser. Tap a button to select that image on your Mojipic.</p></section><section class="panel"><h2>Display brightness</h2><input id="bright" type="range" min="0" max="100" value="50" disabled><button id="applyBright" class="secondary wide" disabled>Set brightness</button><p class="muted">Brightness is an experimental control and is disabled until verified on hardware.</p></section><section class="panel"><details open><summary>Connection and upload log</summary><pre id="log" style="white-space:pre-wrap;font-size:12px;max-height:240px;overflow:auto"></pre></details><button class="secondary wide" id="copyLog">Copy diagnostic log</button></section><p class="muted">Experimental controller built from Mojipic Android 4.6.0-R Bluetooth protocol. Upload requires beacio Web Bluetooth in Safari and an HTTPS page. v7 uses notification-only transfer readiness, with no repeated FFF2 reads during transfer. This is an experimental hardware test, not yet verified to complete an upload. A successful hardware upload is not yet confirmed. It does not include firmware, reset, erase, or power-off commands.</p><script>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Mojipic Remote v8</title><style>:root{font-family:-apple-system,BlinkMacSystemFont,system-ui;color:#f5f8ff;background:#0c1424}body{max-width:620px;margin:0 auto;padding:22px 18px 70px}h1{font-size:29px;margin:12px 0 3px}.sub{color:#94a5bf;margin:0 0 20px}.panel{padding:18px;background:#192538;border-radius:18px;margin:15px 0}button{background:#5650e9;color:white;border:0;border-radius:13px;padding:14px;font-size:16px;font-weight:650;cursor:pointer}button:disabled{opacity:.45}button.secondary{background:#30445d}button.warn{background:#884344}button.wide{width:100%;margin:8px 0}input[type=file]{display:block;margin:12px 0;width:100%}input[type=range]{width:100%}.row{display:flex;gap:9px}.row button{flex:1}canvas{width:256px;height:256px;image-rendering:pixelated;background:#000;display:block;margin:15px auto;border-radius:9px}#status{color:#c3d4f0;line-height:1.5;white-space:pre-wrap}progress{width:100%;height:20px}.muted{font-size:13px;color:#98a7bd}input[type=number]{width:70px;background:#111d31;border:1px solid #52607b;border-radius:9px;color:white;padding:10px;font-size:16px}#library button{margin:4px}label{display:block;margin-top:12px}</style></head><body><h1>🚘 Mojipic Remote <small style="font-size:13px;color:#8c9db5">v8</small></h1><p class="sub">Your photos → your 32×32 LED display</p><section class="panel"><button id="connect" class="wide">Connect Mojipic</button><div id="status">Not connected.</div></section><section class="panel"><h2>Send a picture</h2><input type="file" id="photo" accept="image/*"><canvas id="preview" width="32" height="32"></canvas><div class="row"><button id="upload" disabled>Upload & display</button><button class="secondary" id="test">Create test image</button></div><progress id="progress" value="0" max="192"></progress><p class="muted">One picture = 192 Bluetooth packets. Keep Safari open and the phone near the display until verification completes.</p></section><section class="panel"><h2>Saved images</h2><div id="library"></div><p class="muted">Image buttons are saved locally in this browser. Tap a button to select that image on your Mojipic.</p></section><section class="panel"><h2>Display brightness</h2><input id="bright" type="range" min="0" max="100" value="50" disabled><button id="applyBright" class="secondary wide" disabled>Set brightness</button><p class="muted">Brightness is an experimental control and is disabled until verified on hardware.</p></section><section class="panel"><details open><summary>Connection and upload log</summary><pre id="log" style="white-space:pre-wrap;font-size:12px;max-height:240px;overflow:auto"></pre></details><button class="secondary wide" id="copyLog">Copy diagnostic log</button></section><p class="muted">Experimental controller built from Mojipic Android 4.6.0-R Bluetooth protocol. Upload requires beacio Web Bluetooth in Safari and an HTTPS page. v8 handles missing Safari/beacio notification values and uses bounded notification + fallback reads to avoid a JavaScript crash. This is an experimental hardware test, not yet verified to complete an upload. A successful hardware upload is not yet confirmed. It does not include firmware, reset, erase, or power-off commands.</p><script>
 const $=id=>document.getElementById(id), UUID=n=>'0000'+n.toLowerCase()+'-0000-1000-8000-00805f9b34fb';let device,server,svc,chars={},disconnectReason=null,latestStatus=null,statusSequence=0,statusHistory=[],busy=false,currentId=Number(localStorage.getItem("mojipic_nextid")||1),loaded=false;const cvs=$('preview'),cx=cvs.getContext('2d',{willReadFrequently:true});cx.fillStyle='#000';cx.fillRect(0,0,32,32);function say(s){$('status').textContent=s;log(s)}function log(s){$('log').textContent+=new Date().toLocaleTimeString()+' '+s+'\n';$('log').scrollTop=$('log').scrollHeight}function u16le(n){return new Uint8Array([n&255,(n>>8)&255])}function idForPicture(n){return 0x2000|(n&4095)}function sleep(ms){return new Promise(r=>setTimeout(r,ms))}function setEnabled(b){$('upload').disabled=!b||!loaded;$('bright').disabled=true;$('applyBright').disabled=true}function setTest(){cx.fillStyle='#000';cx.fillRect(0,0,32,32);cx.fillStyle='#f63';cx.fillRect(3,3,26,26);cx.fillStyle='#000';cx.fillRect(9,11,4,4);cx.fillRect(19,11,4,4);cx.fillRect(10,23,12,3);loaded=true;setEnabled(!!server);say('Test image ready. Connect and tap Upload & display.')} $('test').onclick=setTest;$('photo').onchange=async ev=>{const f=ev.target.files?.[0];if(!f)return;const url=URL.createObjectURL(f);try{const im=new Image();im.src=url;await im.decode();cx.fillStyle='#000';cx.fillRect(0,0,32,32);let scale=Math.min(32/im.width,32/im.height),w=im.width*scale,h=im.height*scale;cx.drawImage(im,(32-w)/2,(32-h)/2,w,h);loaded=true;setEnabled(!!server);say('Ready: '+f.name+' → 32×32 pixels.')}catch(e){say('Cannot open image: '+e.message)}finally{URL.revokeObjectURL(url)}};
-async function readChars(){svc=await server.getPrimaryService(UUID('FFF0'));let cs=await svc.getCharacteristics();for(const c of cs){const key=c.uuid.substring(4,8).toUpperCase();chars[key]=c;log(key+' '+JSON.stringify(c.properties))}if(!chars.FFF1||!chars.FFF2||!chars.FFF3)throw Error('Missing FFF1 / FFF2 / FFF3 characteristics');await chars.FFF2.startNotifications();chars.FFF2.addEventListener('characteristicvaluechanged',evt=>{let raw=Array.from(new Uint8Array(evt.target.value.buffer,evt.target.value.byteOffset,evt.target.value.byteLength));let v=raw[0];latestStatus=v;statusSequence++;statusHistory.push({seq:statusSequence,value:v,time:Date.now()});if(statusHistory.length>300)statusHistory.shift();if(statusSequence<24||statusSequence%24===0||v&1||v&4)log('Status notification: '+raw.map(b=>b.toString(16).padStart(2,'0')).join(' '))});} $('connect').onclick=async()=>{if(!navigator.bluetooth){say('Web Bluetooth unavailable. Open the hosted HTTPS page in Safari with beacio enabled.');return;}try{$('connect').disabled=true;say('Searching for Mojipic…');device=await navigator.bluetooth.requestDevice({filters:[{name:'Mojipic'}],optionalServices:[UUID('FFF0'),UUID('180F')]});device.addEventListener('gattserverdisconnected',()=>{disconnectReason='Bluetooth disconnected during transfer';server=null;chars={};setEnabled(false);say('Disconnected. Tap Connect Mojipic to reconnect.')});disconnectReason=null;server=await device.gatt.connect();await readChars();say('Connected to '+device.name+'. Choose a photo or test image and upload.');$('connect').textContent='Reconnect Mojipic';setEnabled(true);drawLibrary();}catch(e){say('Connection error: '+e.message)}finally{$('connect').disabled=false}};
+async function readChars(){svc=await server.getPrimaryService(UUID('FFF0'));let cs=await svc.getCharacteristics();for(const c of cs){const key=c.uuid.substring(4,8).toUpperCase();chars[key]=c;log(key+' '+JSON.stringify(c.properties))}if(!chars.FFF1||!chars.FFF2||!chars.FFF3)throw Error('Missing FFF1 / FFF2 / FFF3 characteristics');await chars.FFF2.startNotifications();chars.FFF2.addEventListener('characteristicvaluechanged',evt=>{try{
+  // Some Safari Web Bluetooth extensions emit a change event without a DataView.
+  const view=evt?.target?.value || evt?.currentTarget?.value || chars.FFF2?.value;
+  if(!view || typeof view.byteLength!=='number' || !view.byteLength){
+    log('Status notification without bytes (ignored; fallback read may be used)');return;
+  }
+  const raw=Array.from(new Uint8Array(view.buffer,view.byteOffset,view.byteLength));
+  const v=raw[0]; if(!Number.isInteger(v))return;
+  latestStatus=v;statusSequence++;
+  statusHistory.push({seq:statusSequence,value:v,time:Date.now()});
+  if(statusHistory.length>300)statusHistory.shift();
+  if(statusSequence<24||statusSequence%24===0||(v&5))log('Status notification: '+raw.map(b=>b.toString(16).padStart(2,'0')).join(' '));
+ }catch(err){log('Ignored malformed status event: '+err.message)}
+});;} $('connect').onclick=async()=>{if(!navigator.bluetooth){say('Web Bluetooth unavailable. Open the hosted HTTPS page in Safari with beacio enabled.');return;}try{$('connect').disabled=true;say('Searching for Mojipic…');device=await navigator.bluetooth.requestDevice({filters:[{name:'Mojipic'}],optionalServices:[UUID('FFF0'),UUID('180F')]});device.addEventListener('gattserverdisconnected',()=>{disconnectReason='Bluetooth disconnected during transfer';server=null;chars={};setEnabled(false);say('Disconnected. Tap Connect Mojipic to reconnect.')});disconnectReason=null;server=await device.gatt.connect();await readChars();say('Connected to '+device.name+'. Choose a photo or test image and upload.');$('connect').textContent='Reconnect Mojipic';setEnabled(true);drawLibrary();}catch(e){say('Connection error: '+e.message)}finally{$('connect').disabled=false}};
 async function readDeviceStatus(label){try{let v=await chars.FFF2.readValue();let bytes=Array.from(new Uint8Array(v.buffer,v.byteOffset,v.byteLength));log((label||'FFF2 read')+': '+bytes.map(n=>'0x'+n.toString(16).padStart(2,'0')).join(' '));return bytes[0]}catch(e){log('FFF2 read unavailable: '+e.message);return null}}function bytesFromCanvas(){const d=cx.getImageData(0,0,32,32).data,b=new Uint8Array(3072);for(let i=0;i<1024;i++){b[i*3]=d[i*4]>>3;b[i*3+1]=d[i*4+1]>>3;b[i*3+2]=d[i*4+2]>>3}return b}
 // Mojipic Android Notification.readStatusDevice uses priority ordering: SUCCESS bit 0x01
 // wins even if ERROR bit 0x02 is also present (your device returned 0x03).
@@ -21,19 +34,33 @@ async function readStatusBytes(label){
  if(label)log(label+': '+a.map(n=>'0x'+n.toString(16).padStart(2,'0')).join(' ')+' ['+statusClass(a[0])+']');
  return a;
 }
-async function awaitNextReady(since, timeoutMs=30000){
- const end=Date.now()+timeoutMs;let last='no notification';
+async function awaitNextReady(since, timeoutMs=18000){
+ const end=Date.now()+timeoutMs;let last='none';let lastRead=0, sawBusy=false;
  while(Date.now()<end){
   if(!server || !chars.FFF2 || disconnectReason)throw Error(disconnectReason||'Bluetooth disconnected');
-  for(const e of statusHistory){
-   if(e.seq<=since)continue;
-   last='0x'+e.value.toString(16);
-   if(e.value & 0x01 || e.value & 0x04)return {via:'notification',value:e.value};
-   if((e.value & 0x02) && !(e.value & 0x01))throw Error('Device returned block error '+last);
+  for(const item of statusHistory){
+    if(item.seq<=since || !Number.isInteger(item.value))continue;
+    const v=item.value;last='notification 0x'+v.toString(16);
+    if(v & 0x01 || v & 0x04)return {via:'notification',value:v};
+    if((v & 0x02) && !(v & 0x01))throw Error('Device reported write error '+last);
+    if(v===0xc8)sawBusy=true;
   }
-  await sleep(70);
+  // Poll only occasionally, and only when notifications are missing. This is
+  // a diagnostic fallback, not the required transfer mechanism.
+  if(Date.now()-lastRead>1200){
+   lastRead=Date.now();
+   try { const v=await chars.FFF2.readValue();
+    if(v&&v.byteLength){ const a=new Uint8Array(v.buffer,v.byteOffset,v.byteLength);const code=a[0];
+     last='read '+Array.from(a).map(x=>x.toString(16).padStart(2,'0')).join(' ');
+     if((code&1)||(code&4))return {via:'read',value:code};
+     if(code===0xc8)sawBusy=true;
+     if((code&2)&&!(code&1)&&code!==0xc8)throw Error('Device reports write error '+last);
+    }
+   }catch(e){if(e.message.startsWith('Device reports'))throw e;log('Status fallback read failed: '+e.message)}
+  }
+  await sleep(100);
  }
- throw Error('No packet-ready notification in '+timeoutMs+'ms; last='+last+'. Transfer stopped safely.');
+ throw Error('No packet acknowledgement in '+timeoutMs+'ms; last='+last+(sawBusy?' (device busy)':'')+'.');
 }
 async function initializeDevice(){
  if(!chars.FFF6)throw Error('Missing FFF6 control characteristic');
@@ -54,7 +81,7 @@ async function upload(){
  try{
   say('Starting picture '+id+'…');$('progress').value=0;
   await initializeDevice();
-  log('Using notification-only pacing; no status reads during transfer.');
+  log('Using validated notifications with occasional fallback reads; malformed events ignored.');
   // Original Android Writer initializes its local state to WRITE_BLOCK_SUCCESS
   // and awaits a ready report before subsequent packets.
   for(let i=0;i<192;i++){
@@ -67,7 +94,7 @@ async function upload(){
    if(i%16===0||i===191)say('Uploaded '+(i+1)+'/192 packets…');
    // Last packet may finish the image and emit WRITE_IMAGE_SUCCESS rather than a block-ready signal.
    if(i<191){
-    let ack=await awaitNextReady(seq,30000);
+    let ack=await awaitNextReady(seq,18000);
     if(i<4||i%32===0)log('Packet '+(i+1)+' accepted via '+ack.via+' (0x'+ack.value.toString(16)+')');
     if(ack.via==='image-complete')throw Error('Device says image completed early at packet '+(i+1));
    }
