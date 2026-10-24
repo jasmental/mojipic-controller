@@ -1,15 +1,48 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Mojipic Remote v4</title><style>:root{font-family:-apple-system,BlinkMacSystemFont,system-ui;color:#f5f8ff;background:#0c1424}body{max-width:620px;margin:0 auto;padding:22px 18px 70px}h1{font-size:29px;margin:12px 0 3px}.sub{color:#94a5bf;margin:0 0 20px}.panel{padding:18px;background:#192538;border-radius:18px;margin:15px 0}button{background:#5650e9;color:white;border:0;border-radius:13px;padding:14px;font-size:16px;font-weight:650;cursor:pointer}button:disabled{opacity:.45}button.secondary{background:#30445d}button.warn{background:#884344}button.wide{width:100%;margin:8px 0}input[type=file]{display:block;margin:12px 0;width:100%}input[type=range]{width:100%}.row{display:flex;gap:9px}.row button{flex:1}canvas{width:256px;height:256px;image-rendering:pixelated;background:#000;display:block;margin:15px auto;border-radius:9px}#status{color:#c3d4f0;line-height:1.5;white-space:pre-wrap}progress{width:100%;height:20px}.muted{font-size:13px;color:#98a7bd}input[type=number]{width:70px;background:#111d31;border:1px solid #52607b;border-radius:9px;color:white;padding:10px;font-size:16px}#library button{margin:4px}label{display:block;margin-top:12px}</style></head><body><h1>🚘 Mojipic Remote <small style="font-size:13px;color:#8c9db5">v4</small></h1><p class="sub">Your photos → your 32×32 LED display</p><section class="panel"><button id="connect" class="wide">Connect Mojipic</button><div id="status">Not connected.</div></section><section class="panel"><h2>Send a picture</h2><input type="file" id="photo" accept="image/*"><canvas id="preview" width="32" height="32"></canvas><div class="row"><button id="upload" disabled>Upload & display</button><button class="secondary" id="test">Create test image</button></div><progress id="progress" value="0" max="192"></progress><p class="muted">One picture = 192 Bluetooth packets. Keep Safari open and the phone near the display until verification completes.</p></section><section class="panel"><h2>Saved images</h2><div id="library"></div><p class="muted">Image buttons are saved locally in this browser. Tap a button to select that image on your Mojipic.</p></section><section class="panel"><h2>Display brightness</h2><input id="bright" type="range" min="0" max="100" value="50" disabled><button id="applyBright" class="secondary wide" disabled>Set brightness</button><p class="muted">Brightness is an experimental control and is disabled until verified on hardware.</p></section><section class="panel"><details open><summary>Connection and upload log</summary><pre id="log" style="white-space:pre-wrap;font-size:12px;max-height:240px;overflow:auto"></pre></details><button class="secondary wide" id="copyLog">Copy diagnostic log</button></section><p class="muted">Experimental controller built from Mojipic Android 4.6.0-R Bluetooth protocol. Upload requires beacio Web Bluetooth in Safari and an HTTPS page. v4 adds first-packet retry and byte-level status diagnostics. A successful hardware upload is not yet confirmed. It does not include firmware, reset, erase, or power-off commands.</p><script>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Mojipic Remote v5</title><style>:root{font-family:-apple-system,BlinkMacSystemFont,system-ui;color:#f5f8ff;background:#0c1424}body{max-width:620px;margin:0 auto;padding:22px 18px 70px}h1{font-size:29px;margin:12px 0 3px}.sub{color:#94a5bf;margin:0 0 20px}.panel{padding:18px;background:#192538;border-radius:18px;margin:15px 0}button{background:#5650e9;color:white;border:0;border-radius:13px;padding:14px;font-size:16px;font-weight:650;cursor:pointer}button:disabled{opacity:.45}button.secondary{background:#30445d}button.warn{background:#884344}button.wide{width:100%;margin:8px 0}input[type=file]{display:block;margin:12px 0;width:100%}input[type=range]{width:100%}.row{display:flex;gap:9px}.row button{flex:1}canvas{width:256px;height:256px;image-rendering:pixelated;background:#000;display:block;margin:15px auto;border-radius:9px}#status{color:#c3d4f0;line-height:1.5;white-space:pre-wrap}progress{width:100%;height:20px}.muted{font-size:13px;color:#98a7bd}input[type=number]{width:70px;background:#111d31;border:1px solid #52607b;border-radius:9px;color:white;padding:10px;font-size:16px}#library button{margin:4px}label{display:block;margin-top:12px}</style></head><body><h1>🚘 Mojipic Remote <small style="font-size:13px;color:#8c9db5">v5</small></h1><p class="sub">Your photos → your 32×32 LED display</p><section class="panel"><button id="connect" class="wide">Connect Mojipic</button><div id="status">Not connected.</div></section><section class="panel"><h2>Send a picture</h2><input type="file" id="photo" accept="image/*"><canvas id="preview" width="32" height="32"></canvas><div class="row"><button id="upload" disabled>Upload & display</button><button class="secondary" id="test">Create test image</button></div><progress id="progress" value="0" max="192"></progress><p class="muted">One picture = 192 Bluetooth packets. Keep Safari open and the phone near the display until verification completes.</p></section><section class="panel"><h2>Saved images</h2><div id="library"></div><p class="muted">Image buttons are saved locally in this browser. Tap a button to select that image on your Mojipic.</p></section><section class="panel"><h2>Display brightness</h2><input id="bright" type="range" min="0" max="100" value="50" disabled><button id="applyBright" class="secondary wide" disabled>Set brightness</button><p class="muted">Brightness is an experimental control and is disabled until verified on hardware.</p></section><section class="panel"><details open><summary>Connection and upload log</summary><pre id="log" style="white-space:pre-wrap;font-size:12px;max-height:240px;overflow:auto"></pre></details><button class="secondary wide" id="copyLog">Copy diagnostic log</button></section><p class="muted">Experimental controller built from Mojipic Android 4.6.0-R Bluetooth protocol. Upload requires beacio Web Bluetooth in Safari and an HTTPS page. v5 recognizes status bits reported by your hardware, polls the device as well as listening for notifications, and avoids risky first-packet retries. A successful hardware upload is not yet confirmed. It does not include firmware, reset, erase, or power-off commands.</p><script>
 const $=id=>document.getElementById(id), UUID=n=>'0000'+n.toLowerCase()+'-0000-1000-8000-00805f9b34fb';let device,server,svc,chars={},latestStatus=null,statusSequence=0,statusHistory=[],busy=false,currentId=Number(localStorage.getItem("mojipic_nextid")||1),loaded=false;const cvs=$('preview'),cx=cvs.getContext('2d',{willReadFrequently:true});cx.fillStyle='#000';cx.fillRect(0,0,32,32);function say(s){$('status').textContent=s;log(s)}function log(s){$('log').textContent+=new Date().toLocaleTimeString()+' '+s+'\n';$('log').scrollTop=$('log').scrollHeight}function u16le(n){return new Uint8Array([n&255,(n>>8)&255])}function idForPicture(n){return 0x2000|(n&4095)}function sleep(ms){return new Promise(r=>setTimeout(r,ms))}function setEnabled(b){$('upload').disabled=!b||!loaded;$('bright').disabled=true;$('applyBright').disabled=true}function setTest(){cx.fillStyle='#000';cx.fillRect(0,0,32,32);cx.fillStyle='#f63';cx.fillRect(3,3,26,26);cx.fillStyle='#000';cx.fillRect(9,11,4,4);cx.fillRect(19,11,4,4);cx.fillRect(10,23,12,3);loaded=true;setEnabled(!!server);say('Test image ready. Connect and tap Upload & display.')} $('test').onclick=setTest;$('photo').onchange=async ev=>{const f=ev.target.files?.[0];if(!f)return;const url=URL.createObjectURL(f);try{const im=new Image();im.src=url;await im.decode();cx.fillStyle='#000';cx.fillRect(0,0,32,32);let scale=Math.min(32/im.width,32/im.height),w=im.width*scale,h=im.height*scale;cx.drawImage(im,(32-w)/2,(32-h)/2,w,h);loaded=true;setEnabled(!!server);say('Ready: '+f.name+' → 32×32 pixels.')}catch(e){say('Cannot open image: '+e.message)}finally{URL.revokeObjectURL(url)}};
 async function readChars(){svc=await server.getPrimaryService(UUID('FFF0'));let cs=await svc.getCharacteristics();for(const c of cs){const key=c.uuid.substring(4,8).toUpperCase();chars[key]=c;log(key+' '+JSON.stringify(c.properties))}if(!chars.FFF1||!chars.FFF2||!chars.FFF3)throw Error('Missing FFF1 / FFF2 / FFF3 characteristics');await chars.FFF2.startNotifications();chars.FFF2.addEventListener('characteristicvaluechanged',evt=>{let v=evt.target.value.getUint8(0);latestStatus=v;statusSequence++;statusHistory.push({seq:statusSequence,value:v,time:Date.now()});if(statusHistory.length>300)statusHistory.shift();if(statusSequence<20||statusSequence%32===0||v&2||v&8||v&64)log('Device status: 0x'+v.toString(16).padStart(2,'0'))});} $('connect').onclick=async()=>{if(!navigator.bluetooth){say('Web Bluetooth unavailable. Open the hosted HTTPS page in Safari with beacio enabled.');return;}try{$('connect').disabled=true;say('Searching for Mojipic…');device=await navigator.bluetooth.requestDevice({filters:[{name:'Mojipic'}],optionalServices:[UUID('FFF0'),UUID('180F')]});device.addEventListener('gattserverdisconnected',()=>{server=null;chars={};setEnabled(false);say('Disconnected. Tap Connect Mojipic to reconnect.')});server=await device.gatt.connect();await readChars();say('Connected to '+device.name+'. Choose a photo or test image and upload.');$('connect').textContent='Reconnect Mojipic';setEnabled(true);drawLibrary();}catch(e){say('Connection error: '+e.message)}finally{$('connect').disabled=false}};
 async function readDeviceStatus(label){try{let v=await chars.FFF2.readValue();let bytes=Array.from(new Uint8Array(v.buffer,v.byteOffset,v.byteLength));log((label||'FFF2 read')+': '+bytes.map(n=>'0x'+n.toString(16).padStart(2,'0')).join(' '));return bytes[0]}catch(e){log('FFF2 read unavailable: '+e.message);return null}}function bytesFromCanvas(){const d=cx.getImageData(0,0,32,32).data,b=new Uint8Array(3072);for(let i=0;i<1024;i++){b[i*3]=d[i*4]>>3;b[i*3+1]=d[i*4+1]>>3;b[i*3+2]=d[i*4+2]>>3}return b}
-async function awaitReady(previous,timeout=3000){
- let start=Date.now();while(Date.now()-start<timeout){
-  let after=statusHistory.filter(x=>x.seq>previous);
-  if(after.some(x=>x.value&2))throw Error('Device reported WRITE_BLOCK_ERROR (0x02)');
-  if(after.some(x=>x.value&8))throw Error('Device reported FLASH_NOT_READY (0x08)');
-  if(after.some(x=>x.value&5))return true;
-  await sleep(40);
- }return false;
+// Mojipic Android Notification.readStatusDevice uses priority ordering: SUCCESS bit 0x01
+// wins even if ERROR bit 0x02 is also present (your device returned 0x03).
+// It also accepts FLASH_READY bit 0x04. Original Writer waits BEFORE each packet;
+// do not blindly retry packet zero after a status read indicates success.
+function statusClass(v){
+ if(v == null)return 'unknown';
+ if(v & 0x01)return 'ready';
+ if(v & 0x02)return 'error';
+ if(v & 0x04)return 'ready';
+ if(v & 0x08)return 'busy';
+ if(v & 0x40)return 'image-complete';
+ return 'pending';
+}
+async function readStatusBytes(label){
+ let v=await chars.FFF2.readValue();
+ let a=Array.from(new Uint8Array(v.buffer,v.byteOffset,v.byteLength));
+ if(label)log(label+': '+a.map(n=>'0x'+n.toString(16).padStart(2,'0')).join(' ')+' ['+statusClass(a[0])+']');
+ return a;
+}
+async function awaitNextReady(since, timeoutMs=6500){
+ const end=Date.now()+timeoutMs;let last=null,polls=0;
+ while(Date.now()<end){
+  const events=statusHistory.filter(x=>x.seq>since);
+  for(let e of events){
+   const state=statusClass(e.value);
+   if(state==='ready')return {via:'notification',value:e.value};
+   if(state==='error')throw Error('Device reported explicit write error 0x'+e.value.toString(16));
+  }
+  try{
+   const bytes=await readStatusBytes(null);polls++;
+   const state=statusClass(bytes[0]);
+   if(polls<4 || state==='ready' || state==='error' || state==='image-complete'){
+    log('Polled FFF2 '+bytes.map(n=>n.toString(16).padStart(2,'0')).join(' ')+' ['+state+']');
+   }
+   if(state==='ready')return {via:'read',value:bytes[0]};
+   if(state==='error')throw Error('Device reported explicit write error 0x'+bytes[0].toString(16));
+   if(state==='image-complete')return {via:'image-complete',value:bytes[0]};
+  }catch(e){if(e.message.startsWith('Device reported'))throw e;log('Status read error: '+e.message)}
+  await sleep(140);
+ }
+ throw Error('No ready response within '+timeoutMs+'ms; last='+ (last==null?'none':last));
 }
 async function show(id){if(!chars.FFF3)throw Error('Connect first');await chars.FFF3.writeValueWithResponse(u16le(id));say('Display selection sent for image '+(id&4095)+'. Check Mojipic screen.')}
 async function upload(){
@@ -18,41 +51,32 @@ async function upload(){
  const id=currentId,encoded=idForPicture(id),data=bytesFromCanvas();
  try{
   say('Starting picture '+id+'…');$('progress').value=0;
-  await readDeviceStatus('Before transfer FFF2');
+  await readStatusBytes('Before transfer FFF2');
+  // Original Android Writer initializes its local state to WRITE_BLOCK_SUCCESS
+  // and awaits a ready report before subsequent packets.
   for(let i=0;i<192;i++){
-   const b=new Uint8Array(20);b[0]=(encoded>>8)&255;b[1]=encoded&255;b[2]=i;b[3]=0;
-   b.set(data.subarray(i*16,i*16+16),4);
+   const packet=new Uint8Array(20);packet[0]=(encoded>>8)&255;packet[1]=encoded&255;packet[2]=i;packet[3]=0;
+   packet.set(data.subarray(i*16,i*16+16),4);
    const seq=statusSequence;
-   // Use the same write-with-response behavior as the Android app's GATT write.
-   await chars.FFF1.writeValueWithResponse(b);
+   if(i===0)log('First packet: '+Array.from(packet).map(n=>n.toString(16).padStart(2,'0')).join(' '));
+   await chars.FFF1.writeValueWithResponse(packet);
    $('progress').value=i+1;
-   if(i===0)log('First packet hex: '+Array.from(b).map(n=>n.toString(16).padStart(2,'0')).join(' '));
-   if((i+1)%16===0||i===0){say('Transmitting '+(i+1)+'/192…');log('Packet '+(i+1)+'/192 queued; notifications='+statusSequence);}
-   let ready=await awaitReady(seq, i===0?3500:2500);
-   if(!ready && i===0){
-    // Some BLE bridges can drop the first status notification; retry *only* packet 0,
-    // never blindly send the remaining image or rewrite other frames.
-    log('No confirmation of first packet. Reading device status before one retry.');
-    await readDeviceStatus('After initial packet');
-    await sleep(500);
-    const retrySeq=statusSequence;
-    await chars.FFF1.writeValueWithResponse(b);
-    log('Retried first packet once; waiting for acknowledgement.');
-    ready=await awaitReady(retrySeq,4500);
-   }
-   if(!ready){
-    await readDeviceStatus('After stalled packet '+(i+1));
-    throw Error('No success acknowledgement for packet '+(i+1)+' (sent '+(i+1)+'/192). Stopped to avoid incomplete writes.');
+   if(i%16===0||i===191)say('Uploaded '+(i+1)+'/192 packets…');
+   // Last packet may finish the image and emit WRITE_IMAGE_SUCCESS rather than a block-ready signal.
+   if(i<191){
+    let ack=await awaitNextReady(seq,6500);
+    if(i<4||i%32===0)log('Packet '+(i+1)+' accepted via '+ack.via+' (0x'+ack.value.toString(16)+')');
+    if(ack.via==='image-complete')throw Error('Device says image completed early at packet '+(i+1));
    }
   }
-  await sleep(700);
-  await readDeviceStatus('After full transfer');
+  await sleep(500);
+  await readStatusBytes('After full transfer');
   await show(encoded);
   currentId++;localStorage.setItem('mojipic_nextid',String(currentId));
   let list=JSON.parse(localStorage.getItem('mojipic_ids')||'[]');list.push({id:encoded,name:'Picture '+id});
   localStorage.setItem('mojipic_ids',JSON.stringify(list));drawLibrary();
-  say('All 192 packets acknowledged. Display command sent. Check the screen.');
- }catch(e){say('Transfer stopped: '+e.message);log('Error: '+(e.stack||e.message));}
+  say('Sent all 192 packets and requested display. Check Mojipic screen.');
+ }catch(e){say('Transfer stopped after '+$('progress').value+'/192 packets: '+e.message);log('Error: '+(e.stack||e.message));}
  finally{busy=false;setEnabled(!!server)}
 }
 $('upload').onclick=upload;function drawLibrary(){let a=JSON.parse(localStorage.getItem('mojipic_ids')||'[]');$('library').replaceChildren();if(!a.length){$('library').textContent='No uploaded pictures recorded yet.';return}for(const entry of a){let btn=document.createElement('button');btn.textContent=entry.name;btn.className='secondary';btn.onclick=()=>show(entry.id).catch(e=>say(e.message));$('library').append(btn)}}drawLibrary();$('copyLog').onclick=async()=>{try{await navigator.clipboard.writeText($('log').textContent);say('Log copied. Paste it into ChatGPT.')}catch(e){say('Could not copy log: '+e.message)}};
